@@ -89,7 +89,9 @@ extension ViewController {
         
         do {
             let contents = try fileManager.contentsOfDirectory(atPath: folder.path)
-            let urls = contents.map { return folder.appendingPathComponent($0) }
+            let urls = contents
+                .filter { return showInvisibles ? true : $0.first != "." }
+                .map { return folder.appendingPathComponent($0) }
             return urls
         } catch {
             return []
@@ -139,10 +141,8 @@ extension ViewController {
 extension ViewController {
     
     @IBAction func selectFolderClicked(_ sender: Any) {
-        // 1
         guard let window = view.window else { return }
         
-        // 2
         let panel = NSOpenPanel()
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
@@ -158,18 +158,55 @@ extension ViewController {
     }
     
     @IBAction func toggleShowInvisibles(_ sender: NSButton) {
+        showInvisibles = (sender.state == NSControl.StateValue.on)
+        
+        if let selectedFolder = selectedFolder {
+            filesList = contentsOf(folder: selectedFolder)
+            selectedItem = nil
+            tableView.reloadData()
+        }
     }
     
     @IBAction func tableViewDoubleClicked(_ sender: Any) {
+        if tableView.selectedRow < 0 { return }
+        
+        let selectedItem = filesList[tableView.selectedRow]
+
+        if selectedItem.hasDirectoryPath {
+            selectedFolder = selectedItem
+        }
     }
     
     @IBAction func moveUpClicked(_ sender: Any) {
-    }
-    
-    @IBAction func moveDownClicked(_ sender: Any) {
+        if selectedFolder?.path == "/" { return }
+        selectedFolder = selectedFolder?.deletingLastPathComponent()
     }
     
     @IBAction func saveInfoClicked(_ sender: Any) {
+        guard let window = view.window else { return }
+        guard let selectedItem = selectedItem else { return }
+        
+        let panel = NSSavePanel()
+        panel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        panel.nameFieldStringValue = selectedItem
+            .deletingPathExtension()
+            .appendingPathExtension("info.txt")
+            .lastPathComponent
+        
+        panel.beginSheetModal(for: window) { (result) in
+            if result == NSApplication.ModalResponse.OK,
+                let url = panel.url {
+                
+                do {
+                    let infoAsText = self.infoAbout(url: selectedItem)
+                    try infoAsText.write(to: url, atomically: true, encoding: .utf8)
+                } catch {
+                    self.showErrorDialogIn(window: window,
+                                           title: "Unable to save file",
+                                           message: error.localizedDescription)
+                }
+            }
+        }
     }
     
 }
@@ -212,7 +249,9 @@ extension ViewController: NSTableViewDelegate {
         }
         
         selectedItem = filesList[tableView.selectedRow]
+        
     }
+    
     
 }
 
