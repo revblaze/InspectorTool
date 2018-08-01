@@ -33,7 +33,7 @@ class ViewController: NSViewController {
                 view.window?.title = selectedFolder.path
             } else {
                 moveUpButton.isEnabled = false
-                view.window?.title = "FileSpy"
+                view.window?.title = "InspectorTool"
             }
         }
     }
@@ -57,18 +57,6 @@ class ViewController: NSViewController {
     }
     
     // MARK: - View Lifecycle & error dialog utility
-    /*
-    override func viewDidLoad() {
-        self.tableView.backgroundColor = NSColor.clear
-        self.tableView.enclosingScrollView?.drawsBackground = false
-        
-    }
-    
-    func setTransparent() {
-        let CustomView = MenuRowView()
-        return CustomView
-    }
- */
     
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -97,11 +85,35 @@ class ViewController: NSViewController {
 extension ViewController {
     
     func contentsOf(folder: URL) -> [URL] {
-        return []
+        let fileManager = FileManager.default
+        
+        do {
+            let contents = try fileManager.contentsOfDirectory(atPath: folder.path)
+            let urls = contents.map { return folder.appendingPathComponent($0) }
+            return urls
+        } catch {
+            return []
+        }
     }
     
     func infoAbout(url: URL) -> String {
-        return "No information available for \(url.path)"
+        let fileManager = FileManager.default
+        
+        do {
+
+            let attributes = try fileManager.attributesOfItem(atPath: url.path)
+            var report: [String] = ["\(url.path)", ""]
+
+            for (key, value) in attributes {
+                // ignore NSFileExtendedAttributes as it is a messy dictionary
+                if key.rawValue == "NSFileExtendedAttributes" { continue }
+                report.append("\(key.rawValue):\t \(value)")
+            }
+            
+            return report.joined(separator: "\n")
+        } catch {
+            return "No information available for \(url.path)"
+        }
     }
     
     func formatInfoText(_ text: String) -> NSAttributedString {
@@ -111,7 +123,7 @@ extension ViewController {
         paragraphStyle?.tabStops = [ NSTextTab(type: .leftTabStopType, location: 240) ]
         
         let textAttributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.font: NSFont.systemFont(ofSize: 14),
+            NSAttributedStringKey.font: NSFont(name: "SFMono-Regular", size: 12) as Any,
             NSAttributedStringKey.paragraphStyle: NSParagraphStyle.default
         ]
         
@@ -127,6 +139,22 @@ extension ViewController {
 extension ViewController {
     
     @IBAction func selectFolderClicked(_ sender: Any) {
+        // 1
+        guard let window = view.window else { return }
+        
+        // 2
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        
+        // 3
+        panel.beginSheetModal(for: window) { (result) in
+            if result == NSApplication.ModalResponse.OK {
+                // 4
+                self.selectedFolder = panel.urls[0]
+            }
+        }
     }
     
     @IBAction func toggleShowInvisibles(_ sender: NSButton) {
@@ -162,6 +190,18 @@ extension ViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, viewFor
         tableColumn: NSTableColumn?, row: Int) -> NSView? {
+
+        let item = filesList[row]
+
+        let fileIcon = NSWorkspace.shared.icon(forFile: item.path)
+
+        if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FileCell"), owner: nil)
+            as? NSTableCellView {
+            cell.textField?.stringValue = item.lastPathComponent
+            cell.imageView?.image = fileIcon
+            return cell
+        }
+        
         return nil
     }
     
