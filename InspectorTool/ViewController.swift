@@ -13,7 +13,7 @@ class ViewController: NSViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var infoTextView: NSTextView!
+    @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var saveInfoButton: NSButton!
     @IBOutlet weak var moveUpButton: NSButton!
     
@@ -40,7 +40,7 @@ class ViewController: NSViewController {
     
     var selectedItem: URL? {
         didSet {
-            infoTextView.string = ""
+            textView.string = ""
             saveInfoButton.isEnabled = false
             
             guard let selectedUrl = selectedItem else {
@@ -50,13 +50,23 @@ class ViewController: NSViewController {
             let infoString = infoAbout(url: selectedUrl)
             if !infoString.isEmpty {
                 let formattedText = formatInfoText(infoString)
-                infoTextView.textStorage?.setAttributedString(formattedText)
+                textView.textStorage?.setAttributedString(formattedText)
                 saveInfoButton.isEnabled = true
+
+                // Update Line Numbers
+                textView.lineNumberView.needsDisplay = true
             }
         }
     }
     
     // MARK: - View Lifecycle & error dialog utility
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Setup LineNumberView
+        textView.lnv_setUpLineNumberView()
+    }
     
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -125,7 +135,7 @@ extension ViewController {
         paragraphStyle?.tabStops = [ NSTextTab(type: .leftTabStopType, location: 240) ]
         
         let textAttributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.font: NSFont(name: "SFMono-Regular", size: 12) as Any,
+            NSAttributedStringKey.font: NSFont(name: "RobotoMono-Regular", size: 12) as Any,
             NSAttributedStringKey.paragraphStyle: NSParagraphStyle.default
         ]
         

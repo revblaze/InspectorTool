@@ -26,6 +26,11 @@
 	<string>Copyright © 2018 Justin Bush. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>RobotoMono-Light.ttf</string>
+		<string>RobotoMono-Regular.ttf</string>
+	</array>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

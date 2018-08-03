@@ -685,7 +685,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="InspectorTool" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="InspectorTool" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -899,10 +899,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="infoTextView" destination="K6g-wC-2qq" id="0GJ-vx-4Ag"/>
                         <outlet property="moveUpButton" destination="03q-C0-iTE" id="nnC-T7-I5C"/>
                         <outlet property="saveInfoButton" destination="G9k-0i-8y7" id="wuN-TS-vga"/>
                         <outlet property="tableView" destination="Dke-IZ-bDq" id="kt9-Al-Mn0"/>
+                        <outlet property="textView" destination="K6g-wC-2qq" id="avx-Yt-xdT"/>
                     </connections>
                 </viewController>
                 <customObject id="GLW-SI-iSS" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
