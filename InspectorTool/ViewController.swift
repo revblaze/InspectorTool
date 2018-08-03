@@ -66,6 +66,9 @@ class ViewController: NSViewController {
         
         // Setup LineNumberView
         textView.lnv_setUpLineNumberView()
+        
+        // NSHomeDirectory on Launch
+        selectedFolder = NSURL.fileURL(withPath: NSHomeDirectory(), isDirectory: true)
     }
     
     override func viewWillAppear() {
