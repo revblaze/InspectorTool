@@ -93,14 +93,23 @@ class LineNumberRulerView: NSRulerView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func drawHashMarksAndLabels(in rect: NSRect) {
+        
+        // Custom Ruler Background
+        let docRect = convert(clientView!.bounds, from: clientView)
+        let y = docRect.origin.y
+        let height = docRect.size.height
+        let width = bounds.size.width
+        NSColor(calibratedRed: 0.969, green: 0.969, blue: 0.969, alpha: 0.8).set()
+        NSRect(x: 0, y: y, width: width, height: height).fill()
         
         if let textView = self.clientView as? NSTextView {
             if let layoutManager = textView.layoutManager {
                 
                 let relativePoint = self.convert(NSZeroPoint, from: textView)
-                let lineNumberAttributes = [NSAttributedStringKey.font: textView.font!, NSAttributedStringKey.foregroundColor: NSColor.gray] as [NSAttributedStringKey : Any]
+                // Line 'Number' Attribute
+                //let lineNumberAttributes = [NSAttributedStringKey.font: textView.font!, NSAttributedStringKey.foregroundColor: NSColor.gray] as [NSAttributedStringKey : Any]
+                let lineNumberAttributes = [NSAttributedStringKey.font: NSFont(name: "RobotoMono-Regular", size: 10)!, NSAttributedStringKey.foregroundColor: NSColor.gray] as [NSAttributedStringKey : Any]
                 
                 let drawLineNumber = { (lineNumberString:String, y:CGFloat) -> Void in
                     let attString = NSAttributedString(string: lineNumberString, attributes: lineNumberAttributes)
@@ -140,7 +149,8 @@ class LineNumberRulerView: NSRulerView {
                         let lineRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndexForGlyphLine, effectiveRange: &effectiveRange, withoutAdditionalLayout: true)
                         
                         if glyphLineCount > 0 {
-                            drawLineNumber("-", lineRect.minY)
+                            //drawLineNumber("-", lineRect.minY)
+                            drawLineNumber(" ", lineRect.minY)
                         } else {
                             drawLineNumber("\(lineNumber)", lineRect.minY)
                         }

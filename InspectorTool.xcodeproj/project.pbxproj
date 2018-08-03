@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D1F81972114A3A70034D63E /* LineNumberRulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F81962114A3A70034D63E /* LineNumberRulerView.swift */; };
 		4D1F81992114A5280034D63E /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F81982114A5280034D63E /* RobotoMono-Regular.ttf */; };
 		4D1F819B2114A5680034D63E /* RobotoMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D1F819A2114A5680034D63E /* RobotoMono-Light.ttf */; };
 		4D1F819D2114A82F0034D63E /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F819C2114A82F0034D63E /* WindowController.swift */; };
+		4D1F81A82114B9B90034D63E /* LineNumberRulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F81A72114B9B90034D63E /* LineNumberRulerView.swift */; };
 		4D416E2B21120C0B003F064F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D416E2A21120C0B003F064F /* AppDelegate.swift */; };
 		4D416E2D21120C0B003F064F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D416E2C21120C0B003F064F /* ViewController.swift */; };
 		4D416E2F21120C0C003F064F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D416E2E21120C0C003F064F /* Assets.xcassets */; };
@@ -18,10 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D1F81962114A3A70034D63E /* LineNumberRulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberRulerView.swift; sourceTree = "<group>"; };
 		4D1F81982114A5280034D63E /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		4D1F819A2114A5680034D63E /* RobotoMono-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Light.ttf"; sourceTree = "<group>"; };
 		4D1F819C2114A82F0034D63E /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		4D1F81A72114B9B90034D63E /* LineNumberRulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberRulerView.swift; sourceTree = "<group>"; };
 		4D416E2721120C0B003F064F /* InspectorTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InspectorTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D416E2A21120C0B003F064F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D416E2C21120C0B003F064F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 			children = (
 				4D1F819A2114A5680034D63E /* RobotoMono-Light.ttf */,
 				4D1F81982114A5280034D63E /* RobotoMono-Regular.ttf */,
-				4D1F81962114A3A70034D63E /* LineNumberRulerView.swift */,
+				4D1F81A72114B9B90034D63E /* LineNumberRulerView.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -155,9 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D1F81972114A3A70034D63E /* LineNumberRulerView.swift in Sources */,
 				4D1F819D2114A82F0034D63E /* WindowController.swift in Sources */,
 				4D416E2D21120C0B003F064F /* ViewController.swift in Sources */,
+				4D1F81A82114B9B90034D63E /* LineNumberRulerView.swift in Sources */,
 				4D416E2B21120C0B003F064F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

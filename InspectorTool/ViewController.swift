@@ -9,7 +9,7 @@
 import Cocoa
 
 class ViewController: NSViewController {
-
+    
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: NSTableView!
@@ -52,7 +52,7 @@ class ViewController: NSViewController {
                 let formattedText = formatInfoText(infoString)
                 textView.textStorage?.setAttributedString(formattedText)
                 saveInfoButton.isEnabled = true
-
+                
                 // Update Line Numbers
                 textView.lineNumberView.needsDisplay = true
             }
@@ -112,10 +112,10 @@ extension ViewController {
         let fileManager = FileManager.default
         
         do {
-
+            
             let attributes = try fileManager.attributesOfItem(atPath: url.path)
             var report: [String] = ["\(url.path)", ""]
-
+            
             for (key, value) in attributes {
                 // ignore NSFileExtendedAttributes as it is a messy dictionary
                 if key.rawValue == "NSFileExtendedAttributes" { continue }
@@ -181,7 +181,7 @@ extension ViewController {
         if tableView.selectedRow < 0 { return }
         
         let selectedItem = filesList[tableView.selectedRow]
-
+        
         if selectedItem.hasDirectoryPath {
             selectedFolder = selectedItem
         }
@@ -237,11 +237,11 @@ extension ViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, viewFor
         tableColumn: NSTableColumn?, row: Int) -> NSView? {
-
+        
         let item = filesList[row]
-
+        
         let fileIcon = NSWorkspace.shared.icon(forFile: item.path)
-
+        
         if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "FileCell"), owner: nil)
             as? NSTableCellView {
             cell.textField?.stringValue = item.lastPathComponent
